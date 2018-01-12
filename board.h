@@ -7,9 +7,6 @@ class Board {
 	const int nCol;
 
 	public:
-	    Board(int r, int c):nRow(r),nCol(c) {
-			std::vector<char>rowV(nRow, '.');
-			board = std::vector<std::vector<char> >(nCol, rowV);
-		}
+	    Board(int r, int c);
 		void display();
 };

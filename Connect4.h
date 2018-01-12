@@ -1,12 +1,12 @@
 #include <iostream>
+#include "board.h"
+#include "player.h"
 
 class Connect4 {
 
-	int row;
-	int col;
+	Board b;
 
 	public:
 	    // Default Game Configuration
-		Connect4():row(6),col(7){};
-		void drawBoard();
+		Connect4(int r, int c);
 };

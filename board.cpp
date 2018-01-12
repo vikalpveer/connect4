@@ -1,7 +1,12 @@
 #include "board.h"
 
+
+Board::Board(int r, int c):nRow(r),nCol(c) {
+    std::vector<char>colV(nCol, '.');
+	board = std::vector<std::vector<char> >(nRow, colV);
+}
+
 void Board::display() {
-	std::cout <<"Num Row"<<nRow <<"Num Col:"<<nCol <<"\n";
 	for(int i = 1; i <= nCol; i++) {
 		std::cout<< i <<" ";
 	}

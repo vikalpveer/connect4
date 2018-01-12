@@ -1,6 +1,19 @@
-#include "board.h"
+#include "connect4.h"
 
-int main() {
-	Board B(6, 7);
-	B.display();
+Connect4::Connect4(int r, int c) : b(r,c) {
+	std::cout <<"Welcome " << "\n";
+
+	char turn;
+
+	while(1) {
+	    std::cout <<"Do you want to take the fist turn Y/N ?" << "\n";
+		std::cin >> turn;
+		if(turn == 'Y' || turn == 'N') {
+			break;
+		}else {
+			std::cout << "Invalid Input \n";
+		}
+	}
+
 }
+
