@@ -8,5 +8,6 @@ class Board {
 
 	public:
 	    Board(int r, int c);
-		void display();
+		void draw();
+		int setCol(const int move, const char p);
 };

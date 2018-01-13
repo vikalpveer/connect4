@@ -1,13 +1,16 @@
 #include <iostream>
 
 class Player {
-	static const char Human = 'X';
-	static const char Computer  = 'O';
 
-	char current;
-
+	char piece;
+	bool turn;
 	public:
-	    char move(); 
+	    Player():piece('.'),turn(false){}
+		void setPiece(const char p);
+		char getPiece() const;
+		void setTurn(const bool turn);
+		bool getTurn() const;
+	    //char move(); 
 
 };
 
