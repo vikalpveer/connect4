@@ -22,22 +22,35 @@ void Board::draw() {
 	}
 }
 
-int Board::setCol(const int move, const char p) {
+bool Board::setCol(const int move, const char p) {
 
 	int index = move - 1;
 
-	if(board[index].front() != '.') {
+	if(!validMove(index,p)) {
 		std::cout << "ERR: You cannot choose this column \n";
 		std::cout << "-----------------------------------\n";
-		return 0;
+		return false;
 	}
 
 	std::vector<char>::iterator it = board[index].end();
 	for(; it >= board[index].begin(); it--) {
 		if (*it == '.') {
 			*it = p;
-			return 1;
+			break;
 		}
 	}
-	return 0;
+	return true;
 }
+
+bool Board::validMove(const int index, const char p) {
+	if(board[index].front() != '.') {
+		return false;
+	}
+	return true;
+}
+
+const char Board::getElem(int i, int j) {
+	return board[j].at(i);
+}
+
+

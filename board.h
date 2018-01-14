@@ -9,5 +9,7 @@ class Board {
 	public:
 	    Board(int r, int c);
 		void draw();
-		int setCol(const int move, const char p);
+		bool setCol(const int move, const char p);
+		bool validMove(const int move, const char p);
+		const char getElem(int i, int j);
 };
