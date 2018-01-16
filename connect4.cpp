@@ -1,6 +1,6 @@
 #include "connect4.h"
 
-Connect4::Connect4(int r, int c) : b(r,c),p1(),p2(),init(false), numMoves(0) {
+Connect4::Connect4() : b(),p1(),p2(),init(false), numMoves(0) , EVA(0), playout(0){
 }
 void Connect4::play() {
 	 if(!init) {
@@ -40,10 +40,35 @@ void Connect4::play() {
 		         std::cout << "-----------------------------------\n";
 				 continue;
 	         }
+			 numMoves++;
 		 }else {
 			 // Playing against computer
 			 // It is Computer's Turn
-			 getColumn(piece, move,1);
+			 int best = 9999999;
+			 for(int k = 1; k <= 7 ;k++) {
+				 if(b.validMove(k)) {
+					 b.setCol(k, piece);
+					 if(winner(piece)) {
+					     numMoves++;
+					     b.setCol(k, '.');
+						 move = k;
+						 break;
+					 }
+					 EVA = 0;
+					 playout = 0;
+					 float temp = -(100*getColumn(piece, 1, false));
+					 if(playout) {
+						 temp -= ((100*EVA)/playout);
+					 }
+					 if(best > temp) {
+						 best = temp;
+						 move = k;
+					 }
+					 b.setCol(k, '.');
+				 }
+				 
+			 }
+			 numMoves++;
 		 }
 
 		 if(b.validMove(move) && b.setCol(move, piece)&& !winner(piece)) {
@@ -52,7 +77,6 @@ void Connect4::play() {
 			 }else {
 				 turn = 1;
 			 }
-			 numMoves++;
 		 }
 		 b.draw();
 		 std::cout << "Number of Moves so far :"<< numMoves <<"\n";
@@ -97,7 +121,7 @@ bool Connect4::checkCondition(int x, int y, int i, int j, char p) {
 
 	int k;
 	for(k = 0; k < 4; k++) {
-	    if(x + i*k >= 6 || (x + i*k < 0) || y + j*k>=7 || y + j*k < 0) {
+	    if((x + i*k >= 6) || (x + i*k < 0) || (y + j*k>=7) || (y + j*k < 0)) {
 		    return false;
 	    }
 
@@ -160,7 +184,8 @@ void Connect4::initialize() {
 	}
 }
 
-int Connect4::getColumn(char p, int &col, int depth) {
+int Connect4::getColumn(char p, int depth, bool isMax) {
+	int chance = 0;
 	char p2;
 	if(p == 'X') {
 		p2 = 'O';
@@ -168,37 +193,47 @@ int Connect4::getColumn(char p, int &col, int depth) {
 		p2 = 'X';
 	}
 
-	/* The game is a draw */
-	if(numMoves == 6*7) {
-		return 0;
-	}
-
-	/*
-	if(depth >=3) {
-		return 0;
-	} */
-
-	if(winner(p)) {
-		return (6*7 + 1  - numMoves) / 2;
-	}
-
-	int max  = -6*7;
-
-	if(depth <= 6) {
-	for(int i =1; i <= 7; i++) {
+	for(int i = 1; i <=7; i++) {
 		if(b.validMove(i)) {
-		    b.setCol(i, p);
-			numMoves++;
-			int score = -getColumn(p2, col, depth + 1);
-		    b.setCol(i, '.');
-			numMoves--;
+			b.setCol(i, p2);
+			if(winner(p2)) {
+				if(isMax) {
+					EVA++;
+				}else {
+					EVA--;
+				}
+				b.setCol(i, '.');
+				return -1;
+			}
+			b.setCol(i, '.');
+		}
+	}
 
-			if(score > max) { 
-				max = score;
-				col = i;
+	if(depth <= 6){
+	    for(int i = 1; i <=7; i++) {
+			int temp = 0;
+		    if(b.validMove(i)) {
+		        b.setCol(i, p2);
+				if(winner(p2)) {
+					playout++;
+					if(isMax) {
+						EVA++;
+					}else {
+						EVA--;
+					}
+					b.setCol(i, '.');
+					return -1;
+				}
+				temp = getColumn(p2,depth + 1, !isMax);
+				if(i == 1) {
+					chance = temp;
+				}
+				if(chance < temp) 
+					chance = temp;
+				b.setCol(i, '.');
+
 			}
 		}
-	} 
 	}
-	return max; 
+	return -chance;
 }

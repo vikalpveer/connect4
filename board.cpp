@@ -1,10 +1,20 @@
 #include "board.h"
 
 
-Board::Board(int r, int c):nRow(r),nCol(c) {
+// Definition for num row and num col
+const int Board::nRow;
+const int Board::nCol;
+
+//constructor
+Board::Board() {
+
+	// initialize each entry of board to '.'
     std::vector<char>rowV(nRow, '.');
 	board = std::vector<std::vector<char> >(nCol, rowV);
 }
+
+
+// Display current board
 
 void Board::draw() {
     std::cout << "-----------------------------------\n";
@@ -49,7 +59,7 @@ bool Board::setCol(const int move, const char p) {
 
 bool Board::validMove(const int index) {
 
-	if(index <1 || index  >7) {
+	if(index < 1 || index  > nCol) {
 		return false;
 	}
 
@@ -60,6 +70,9 @@ bool Board::validMove(const int index) {
 }
 
 const char Board::getElem(int i, int j) {
+	if(j < 0 || j >= nCol || i < 0 || i >= nRow) {
+        return -1;
+	}
 	return board[j].at(i);
 }
 
