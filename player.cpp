@@ -13,3 +13,10 @@ void Player::setTurn(const  bool t) {
 bool Player::getTurn() const {
 	return turn;
 }
+
+void Player::setIsComputer(bool val) {
+	isComputer = true;
+}
+bool Player::getIsComputer() {
+	return isComputer;
+}

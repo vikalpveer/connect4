@@ -10,6 +10,7 @@ class Connect4 {
 	Player p1;
 	Player p2;
 	bool init;
+	int numMoves;
 
 	public:
 	    // Default Game Configuration
@@ -18,4 +19,5 @@ class Connect4 {
 		bool winner(const char p);
 		void play();
 	    bool checkCondition(int x, int y, int i, int j, char p);
+		int getColumn(char p, int&i, int depth);
 };

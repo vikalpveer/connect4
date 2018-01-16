@@ -26,24 +26,34 @@ bool Board::setCol(const int move, const char p) {
 
 	int index = move - 1;
 
-	if(!validMove(index,p)) {
-		std::cout << "ERR: You cannot choose this column \n";
-		std::cout << "-----------------------------------\n";
-		return false;
-	}
-
-	std::vector<char>::iterator it = board[index].end();
-	for(; it >= board[index].begin(); it--) {
-		if (*it == '.') {
-			*it = p;
-			break;
+	if(p != '.') {
+	    std::vector<char>::reverse_iterator it = board[index].rbegin();
+	
+	    for(; it != board[index].rend(); it++) {
+		    if (p != '.' && *it == '.') {
+                *it = p;
+                break;
+            }
+	    }
+	}else {
+	    std::vector<char>::iterator it = board[index].begin();
+	    for(; it != board[index].end(); it++) {
+		    if (p == '.' && *it != '.') {
+		        *it = '.';
+		        break;
+			}
 		}
 	}
 	return true;
 }
 
-bool Board::validMove(const int index, const char p) {
-	if(board[index].front() != '.') {
+bool Board::validMove(const int index) {
+
+	if(index <1 || index  >7) {
+		return false;
+	}
+
+	if(board[index - 1].front() != '.') {
 		return false;
 	}
 	return true;

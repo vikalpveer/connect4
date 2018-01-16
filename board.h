@@ -10,6 +10,6 @@ class Board {
 	    Board(int r, int c);
 		void draw();
 		bool setCol(const int move, const char p);
-		bool validMove(const int move, const char p);
+		bool validMove(const int move);
 		const char getElem(int i, int j);
 };
