@@ -1,7 +1,7 @@
 FLAGS = -O
 CC = g++
 connect4 : main.o connect4.o board.o player.o
-	$(CC) $(CLAGS) main.o connect4.o board.o player.o
+	$(CC) $(CLAGS) -o connect4 main.o connect4.o board.o player.o
 
 main.o : main.cpp
 	$(CC) $(CLAGS) -c main.cpp

@@ -1,19 +1,15 @@
 #include <iostream>
 // This is a player class 
 class Player {
-
-	const char piece;
 	bool turn;
-	const bool isComputer;
+	bool isComputer;
+	const char piece;
 	public:
 	    // Constructor. 
-	    Player():piece('.'),turn(false),isComputer(false){}
+	    Player(char p):piece(p),turn(false),isComputer(false){}
 
-		// sets peice 'X' or 'O' for a player.
-		void setPiece(const char p);
-
-		// returns piece for a player
-		const char getPiece() const;
+		//Destructor
+		~Player() {}
 
 		// Sets if the player has his turn
 		void setTurn(const bool turn);
@@ -25,7 +21,12 @@ class Player {
 		void setIsComputer(const bool val);
 
 		// Returns true if this player is a computer.
-		const bool getIsComputer();
+		const bool getIsComputer() const;
 
+		// Set piece for this player
+		void setPiece(const char p) ;
+
+		// returns piece assigned to this player
+	    char getPiece() ;
 };
 
